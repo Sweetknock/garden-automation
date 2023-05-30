@@ -44,8 +44,8 @@ class UpdateDataFile:
         return df
 
 if __name__ == '__main__':
-    ser = Serial('COM4', 9600, timeout=1) # For Windows Environment
-    #ser = Serial('/dev/ttyACM0', 9600, timeout=1)# For linux environment
+    #ser = Serial('COM4', 9600, timeout=1) # For Windows Environment
+    ser = Serial('/dev/ttyACM0', 9600, timeout=1)# For linux environment
     ser.reset_input_buffer()
 
     df = UpdateDataFile.update(ser)

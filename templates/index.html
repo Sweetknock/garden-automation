@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Darktide Best-in-Slot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+{% for table in tables %}
+           <h2> {{titles[loop.index]}} </h2>
+           {{ table|replace("|", "<br/>")|replace("dataframe ", "")|safe }}
+{% endfor %}
+</body>
+</html>
