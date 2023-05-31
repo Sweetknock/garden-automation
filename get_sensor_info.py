@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-from os import path
+from os import path, system
 from serial import Serial
 from datetime import datetime
 import pandas as pd
@@ -18,9 +17,10 @@ class UpdateDataFile:
         data_dict["Date"] = date_string
         
         #Also use date for file name
-        filename = "{}_daily_data.csv".format(date_string) 
+        filename = "/var/www/html/garden-automation/{}_daily_data.csv".format(date_string) 
         if path.exists(filename):
             df = pd.read_csv(filename)
+            system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation".format(filename,filename,filename))
         else:
             df = pd.DataFrame()
 
