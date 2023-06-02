@@ -12,9 +12,9 @@ def html_table():
     else:
         print("System not supported.")
         sys.exit()
-        
+
     ser.reset_input_buffer()
-    df = UpdateDataFile.update(ser)
+    df = UpdateDataFile().update(ser)
     return render_template('index.html', tables=[df.to_html(classes='table-bordered', index=False)], titles=["Bed Data"])
 
 if __name__ == "__main__":
