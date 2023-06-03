@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from os import path, name
+import os
 import sys
 from serial import Serial
 from datetime import datetime
@@ -19,9 +19,9 @@ class UpdateDataFile:
 
         #Also use date for file name
         #filename = "/var/www/html/garden-automation/{}_daily_data.csv".format(date_string) 
-        if path.exists(filename):
+        if os.path.exists(filename):
             df = self.get_database(filename)
-            #system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation".format(filename,filename,filename))
+            os.system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation".format(filename,filename,filename))
         else:
             df = pd.DataFrame()
 
@@ -36,7 +36,7 @@ class UpdateDataFile:
                 line1 = ser.readline().decode('utf-8').rstrip()
                 if line1 == '': line1 = ser.readline().decode('utf-8').rstrip()
                 line2 = ser.readline().decode('utf-8').rstrip()
-                
+
                 if line1.startswith("Humidity(%),"):  
                     humidity_data.append(float(line1.replace("Humidity(%),", "")))
                     temperature_data.append(float(line2.replace("Temperature(F),", "")))
@@ -63,14 +63,14 @@ class UpdateDataFile:
         return date_string, time_string
 
     def get_database(self, filename):
-        if path.exists(filename):
+        if os.path.exists(filename):
             df = pd.read_csv(filename)
             return df
 
 if __name__ == '__main__':
-    if name == 'nt':
+    if os.name == 'nt':
         ser = Serial('COM4', 9600, timeout=1)# For linux environment
-    elif name == 'posix':
+    elif os.name == 'posix':
         ser = Serial('/dev/ttyACM0', 9600, timeout=1)# For linux environment
     else:
         print("System not supported.")
