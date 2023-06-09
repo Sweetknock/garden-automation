@@ -49,7 +49,8 @@ class UpdateDataFile:
         data_dict["Humidity(%)"] = round(sum(humidity_data)/averages,1)
         data_dict["Temperature(F)"] = round(sum(temperature_data)/averages,1)
         df = pd.concat([df, pd.DataFrame(data_dict,index=[i])])
-
+        if os.path.exists(filename):
+            os.system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation")
         df.to_csv(filename, index=False)
         return df
     
@@ -63,7 +64,7 @@ class UpdateDataFile:
 
     def get_database(self, filename):
         if os.path.exists(filename):
-            os.system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation".format(filename,filename,filename))
+            os.system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation")
             df = pd.read_csv(filename)
             return df
 
