@@ -21,7 +21,6 @@ class UpdateDataFile:
         #filename = "/var/www/html/garden-automation/{}_daily_data.csv".format(date_string) 
         if os.path.exists(filename):
             df = self.get_database(filename)
-            os.system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation".format(filename,filename,filename))
         else:
             df = pd.DataFrame()
 
@@ -64,6 +63,7 @@ class UpdateDataFile:
 
     def get_database(self, filename):
         if os.path.exists(filename):
+            os.system("sudo chown -R www-data /var/www/html/garden-automation && sudo chmod -R 774 /var/www/html/garden-automation && sudo chgrp -R www-data /var/www/html/garden-automation".format(filename,filename,filename))
             df = pd.read_csv(filename)
             return df
 
